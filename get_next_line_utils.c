@@ -67,3 +67,15 @@ char	*ft_strchr(const char *s, int c)
 		return (ps);
 	return (0);
 }
+
+void			ft_strcpy(char *dst, const char *src)
+{
+	size_t i;
+
+	i = 0;
+	while (src[i++])
+	{
+		*(dst++) = *(src++);
+	}
+	*dst = '\0';
+}

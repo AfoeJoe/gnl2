@@ -1,3 +1,9 @@
+#customs
+*.txt
+*.md
+LICENSE
+main.c
+
 # Prerequisites
 *.d
 

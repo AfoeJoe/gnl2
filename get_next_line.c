@@ -31,6 +31,7 @@ int	get_next_line(int fd, char **line)
 	int	byte_read;
 	char	*p_n;
 	static char	*remainder;
+	char	*tmp;
 
 	p_n = check_remainder(remainder, line);
 	while (!p_n && (byte_read = read(fd, buf, BUFFERSIZE)))
@@ -42,7 +43,9 @@ int	get_next_line(int fd, char **line)
 			p_n++;
 			remainder = ft_strdup(p_n);
 		}
+		tmp = *line;
 		*line = ft_strjoin(*line, buf);
+		free(tmp);
 	}
-	return (0);
+	return (((byte_read || ft_strlen(remainder)) || ft_strlen(*line)) ? 1 : 0);
 }

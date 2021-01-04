@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkathy <tkathy@student.21-school.>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 19:45:23 by tkathy            #+#    #+#             */
+/*   Updated: 2021/01/04 20:03:40 by tkathy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t		ft_strlen(const char *s)
 {
 	size_t i;
 
@@ -12,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strdup(const char *s1)
+char		*ft_strdup(const char *s1)
 {
 	char	*cpy;
 	size_t	len;
@@ -30,7 +42,7 @@ char	*ft_strdup(const char *s1)
 	return (beg);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char		*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*new_str;
 	char	*beg;
@@ -52,12 +64,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (beg);
 }
 
-char	*ft_strchr(const char *s, int c)
+char		*ft_strchr(const char *s, int c)
 {
 	char *ps;
 
 	ps = (char *)s;
-	while (*ps)
+	while (*ps != '\0')
 	{
 		if (*ps == (char)c)
 			return (ps);
@@ -68,7 +80,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-void			ft_strcpy(char *dst, const char *src)
+void		ft_strcpy(char *dst, const char *src)
 {
 	size_t i;
 

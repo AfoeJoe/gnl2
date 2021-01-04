@@ -6,13 +6,17 @@
 /*   By: tkathy <tkathy@student.21-school.>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:43:21 by tkathy            #+#    #+#             */
-/*   Updated: 2021/01/04 20:34:37 by tkathy           ###   ########.fr       */
+/*   Updated: 2021/01/04 21:16:28 by tkathy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#define BUFFERSIZE (6)
+void	ft_free(char **str)
+{
+	if (*str)
+		free(*str);
+}
 
 char	*check_remainder(char *remainder, char **line)
 {
@@ -40,7 +44,7 @@ char	*check_remainder(char *remainder, char **line)
 
 int		get_next_line(int fd, char **line)
 {
-	char		buf[BUFFERSIZE];
+	char		buf[BUFFER_SIZE + 1];
 	int			byte_read;
 	char		*p_n;
 	static char	*remainder;
@@ -49,7 +53,7 @@ int		get_next_line(int fd, char **line)
 	if (fd < 0 || !line || (BUFFER_SIZE <= 0))
 		return (-1);
 	p_n = check_remainder(remainder, line);
-	while (!p_n && (byte_read = read(fd, buf, BUFFERSIZE)))
+	while (!p_n && (byte_read = read(fd, buf, BUFFER_SIZE)))
 	{
 		buf[byte_read] = '\0';
 		if ((p_n = ft_strchr(buf, '\n')))
@@ -60,7 +64,7 @@ int		get_next_line(int fd, char **line)
 		}
 		tmp = *line;
 		*line = ft_strjoin(*line, buf);
-//		free(tmp);
+		ft_free(&tmp);
 	}
 	return (((byte_read || ft_strlen(remainder)) || ft_strlen(*line)) ? 1 : 0);
 }

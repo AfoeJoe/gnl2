@@ -50,11 +50,13 @@ int		get_next_line(int fd, char **line)
 	static char	*remainder;
 	char		*tmp;
 
-	if (fd < 0 || !line || (BUFFER_SIZE <= 0))
+	if (!fd || !line || (BUFFER_SIZE <= 0))
 		return (-1);
 	p_n = check_remainder(remainder, line);
 	while (!p_n && (byte_read = read(fd, buf, BUFFER_SIZE)))
 	{
+		if (byte_read < 0)
+			return (-1);
 		buf[byte_read] = '\0';
 		if ((p_n = ft_strchr(buf, '\n')))
 		{
@@ -66,5 +68,5 @@ int		get_next_line(int fd, char **line)
 		*line = ft_strjoin(*line, buf);
 		ft_free(&tmp);
 	}
-	return (((byte_read || ft_strlen(remainder)) || ft_strlen(*line)) ? 1 : 0);
+	return ((byte_read || ft_strlen(remainder)) ? 1 : 0);
 }

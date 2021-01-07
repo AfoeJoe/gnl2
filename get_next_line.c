@@ -6,7 +6,7 @@
 /*   By: tkathy <tkathy@student.21-school.>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:43:21 by tkathy            #+#    #+#             */
-/*   Updated: 2021/01/04 21:41:40 by tkathy           ###   ########.fr       */
+/*   Updated: 2021/01/07 20:11:02 by tkathy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,24 @@ char	*check_remainder(char *remainder, char **line)
 
 int		get_next_line(int fd, char **line)
 {
-	char		buf[BUFFER_SIZE + 1];
+	char		*buf;
 	int			byte_read;
 	char		*p_n;
 	static char	*remainder;
 	char		*tmp;
 
-	if (!fd || !line || (BUFFER_SIZE <= 0))
+	if (fd < 0 || !line || (BUFFER_SIZE <= 0))
+		return (-1);
+	if ((buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))) == NULL)
 		return (-1);
 	p_n = check_remainder(remainder, line);
 	while (!p_n && (byte_read = read(fd, buf, BUFFER_SIZE)))
 	{
-		if (byte_read < 0)
+		if (byte_read < 1)
+		{
+			//free(buf);
 			return (-1);
+		}
 		buf[byte_read] = '\0';
 		if ((p_n = ft_strchr(buf, '\n')))
 		{
@@ -66,7 +71,7 @@ int		get_next_line(int fd, char **line)
 		}
 		tmp = *line;
 		*line = ft_strjoin(*line, buf);
-		ft_free(&tmp);
+		free(tmp);
 	}
 	return ((byte_read || ft_strlen(remainder)) ? 1 : 0);
 }
